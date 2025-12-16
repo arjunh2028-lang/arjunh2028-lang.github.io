@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Apply to join Aaroh Music Club — use our application form to submit your details and a short video audition.">
+    <meta name="theme-color" content="#0b1020">
+    <title>Application Form - Aaroh Music Club</title>
+    <link rel="stylesheet" href="index.css">
+    <!-- login removed: no auth script needed -->
+    <script src="index.js" defer></script>
+    </head>
+<body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <header class="site-header">
+        <div class="logo"><img src="aaroh2.jpg" alt="Aaroh Music Club logo (club emblem)"></div>
+        <h1 class="brand">🎶🎤🎼Aaroh Music Club🎶🎤🎼</h1>
+    </header>
+
+    <nav class="main-nav">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="form.html">Application Form</a></li>
+            <li><a href="gallery.html">Gallery</a></li> <li><a href="achieve.html">Achivements</a></li> 
+            <!-- login removed: Logout and user display are hidden -->
+        </ul>
+    </nav>
+
+    <main id="main-content">
+        <h2>Application Form</h2>
+        <form action="#" method="post" novalidate>
+            <fieldset class="fieldset">
+                <label for="fname">Full name:</label>
+                <input type="text" id="fname" name="full_name" required placeholder="Fullname" aria-required="true">
+                
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required placeholder="@vit.edu" aria-required="true">
+
+                <label for="prn">PRN No.</label>
+                <input type="text" id="prn" name="prn_no" required placeholder="PRN No." aria-required="true">
+            </fieldset>
+
+            <fieldset class="fieldset">
+                <label for="campus">Campus:</label>
+                <select id="campus" name="campus" required aria-required="true">
+                    <option value="" disabled selected>Select Campus</option>
+                    <option value="Bibwewadi">Bibwewadi</option>
+                    <option value="Kondwa">Kondwa</option>
+                </select>
+
+                <label for="year">Year:</label>
+                <select id="year" name="year" required aria-required="true">
+                    <option value="" disabled selected>Select Year</option>
+                    <option value="First Year">First Year</option>
+                    <option value="Second Year">Second Year</option>
+                    <option value="Third Year">Third Year</option>
+                </select>
+
+                <label for="branch">Branch:</label>
+                <input type="text" id="branch" name="branch" required placeholder="Branch" aria-required="true">
+            </fieldset>
+
+            <fieldset class="fieldset">
+                <legend>Applying as:</legend>
+                <div class="checkbox-row">
+                    <input class="checkbox" type="radio" id="instrumentist" name="applying_as" value="Instrumentist" required aria-describedby="applying-error">
+                    <label for="instrumentist">Instrumentist</label>
+                    <input class="checkbox" type="radio" id="vocalist" name="applying_as" value="Vocalist" aria-describedby="applying-error">
+                    <label for="vocalist">Vocalist</label>
+                </div>
+            </fieldset>
+           <fieldset class="fieldset">
+                <label for="videoFile">Select a video to upload:</label>
+                <input type="file" id="videoFile" name="video_submission" accept="video/*" required aria-required="true">
+            </fieldset>
+
+            <button type="submit">Submit Application</button>
+            <div id="formSuccess" class="form-success" role="status" aria-hidden="true" tabindex="-1"></div>
+        </form>
+    </main>
+
+
+    <footer>
+        <p>&copy; 2025 Aaroh Music Club. All rights reserved.</p>
+    </footer>
+</body>
+</html>
