@@ -1,12 +1,12 @@
-    // Consolidated site JS: form validation + lightbox (images & videos)
+    
 
     document.addEventListener('DOMContentLoaded', function () {
-      // --- Form validation (application form) ---
+      
       function initFormValidation() {
         const form = document.querySelector('form');
         if (!form) return;
 
-        // Helper: ensure inline error element exists and return it
+        
         function getErrorEl(id, afterEl) {
           let el = document.getElementById(id);
           if (!el) {
@@ -45,7 +45,7 @@
           [fnameErr, emailErr, prnErr, campusErr, yearErr, branchErr, applyingErr, videoErr].forEach(e => { if (e) e.textContent = ''; });
         }
 
-        // small helpers
+        
         function validateEmailAddress(value) {
           const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
           return re.test(value.trim());
@@ -58,12 +58,12 @@
         function validate() {
           clearErrors();
           let valid = true;
-          // Full name
+          
           if (!fname || !fname.value.trim()) {
             if (fnameErr) fnameErr.textContent = 'Full name is required';
             valid = false;
           }
-          // Email
+          
           if (!email || !email.value.trim()) {
             if (emailErr) emailErr.textContent = 'Email is required';
             valid = false;
@@ -73,27 +73,27 @@
               valid = false;
             }
           }
-          // PRN
+          
           if (!prn || !prn.value.trim()) {
             if (prnErr) prnErr.textContent = 'PRN is required';
             valid = false;
           }
-          // Campus
+          
           if (campus && (!campus.value || campus.value === 'Select Campus')) {
             if (campusErr) campusErr.textContent = 'Please select a campus';
             valid = false;
           }
-          // Year
+          
           if (year && (!year.value || year.value === 'Select Year')) {
             if (yearErr) yearErr.textContent = 'Please select a year';
             valid = false;
           }
-          // Branch
+          
           if (branch && !branch.value.trim()) {
             if (branchErr) branchErr.textContent = 'Branch is required';
             valid = false;
           }
-          // Applying as (checkboxes)
+          
           if (checkboxes && checkboxes.length) {
             const any = Array.from(checkboxes).some(cb => cb.checked);
             if (!any) {
@@ -101,7 +101,7 @@
               valid = false;
             }
           }
-          // Video file
+          
           if (videoFile) {
             const files = videoFile.files;
             if (!files || files.length === 0) {
@@ -127,12 +127,12 @@
         form.addEventListener('submit', function (e) {
           if (!validate()) {
             e.preventDefault();
-            // focus first error field
+           
             const first = [fnameErr, emailErr, prnErr, campusErr, yearErr, branchErr, applyingErr, videoErr].find(x => x && x.textContent);
             if (first) {
               let ref = null;
               if (first.id === 'applying-error') {
-                // focus first radio in the group
+                
                 ref = form.querySelector('input[name="applying_as"]');
               } else {
                 ref = document.getElementById(first.id.replace(/Error$|\-error$/, '')) || first.previousElementSibling || first;
@@ -141,7 +141,7 @@
             }
           } else {
               e.preventDefault();
-              // When form is valid, show an accessible client-side success message and reset the form.
+              
               const successEl = document.getElementById('formSuccess');
               if (successEl) {
                 successEl.textContent = 'Application submitted. Thank you! We will get back to you soon.';
@@ -149,7 +149,7 @@
                 successEl.focus();
                 setTimeout(() => { successEl.setAttribute('aria-hidden', 'true'); }, 8000);
               } else {
-                // Fallback if markup not present
+                
                 alert('Application submitted');
               }
               form.reset();
@@ -157,11 +157,10 @@
           }
         });
       }
-      // Initialize form validation
+      
       initFormValidation();
 
-      // --- Site utilities ---
-      // Hero CTA: ensure Apply Now always links to the public form
+      
       function configureHeroCTA() {
         const apply = document.getElementById('cta-apply');
         if (!apply) return;
@@ -169,7 +168,7 @@
       }
       configureHeroCTA();
 
-      // --- Lightbox (images & videos) ---
+      
       (function initLightbox() {
         const galleries = document.querySelectorAll('.gallery');
         const lightbox = document.getElementById('lightbox');
@@ -195,9 +194,9 @@
           lastFocused = document.activeElement;
           lightbox.classList.add('open');
           lightbox.setAttribute('aria-hidden', 'false');
-          // accessibility attributes are defined in markup
+          
           closeBtn.focus();
-          // trap Tab within lightbox
+          
           lbKeyHandler = function (e) {
             if (e.key === 'Tab') {
               const focusables = lightbox.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
@@ -257,7 +256,7 @@
           }
         }
 
-        // Attach handlers
+        
         galleries.forEach(gallery => {
           gallery.addEventListener('click', (e) => {
             const img = e.target.closest('img');
@@ -273,13 +272,13 @@
       })();
 
     });
-/* STORE EMAIL CREDENTIALS (CLIENT SIDE ONLY) */
+
 if (!localStorage.getItem("vitEmail")) {
   localStorage.setItem("vitEmail", "admin@vit.edu");
   localStorage.setItem("vitPass", "vit123");
 }
 
-/* ADD SUCCESS STORY */
+
 function addStory() {
   const text = document.getElementById("storyText").value;
   if (text === "") return;
@@ -291,7 +290,7 @@ function addStory() {
   document.getElementById("storyText").value = "";
 }
 
-/* EMAIL SIMULATION */
+
 function sendMail() {
   const user = document.getElementById("emailUser").value;
   const pass = document.getElementById("emailPass").value;
