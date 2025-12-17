@@ -145,25 +145,50 @@
       </p>
     </article>
   </section>
-  <section class="email-section">
-  <h2 style="color: #000000;">Email Success Story to All VIT Students</h2>
+<section class="interactive-section">
+  <h2>Club Management & Success Stories</h2>
 
-  <form id="emailForm" onsubmit="return sendMail()">
+  <!-- CLUB COMMITTEE UPDATE (CSS ONLY) -->
+  <div class="club-box">
+    <h3>Aaroh Music Club Committee</h3>
 
-    <label for="emailUser">Email ID</label>
+    <input type="checkbox" id="toggleCommittee">
+    <label for="toggleCommittee" class="toggle-btn">
+      Update Committee
+    </label>
+
+    <div class="committee">
+      <p><strong>President:</strong> Om Joshi</p>
+      <p><strong>Secretary:</strong> Kshitij Raikar</p>
+      <p><strong>Treasurer:</strong> Koushal Sadavarte</p>
+    </div>
+  </div>
+
+  <!-- SUCCESS STORY UPDATE -->
+  <div class="club-box">
+    <h3>Add Success Story</h3>
+    <textarea id="storyText" placeholder="Enter success story..." required></textarea>
+    <button onclick="addStory()">Add Story</button>
+  </div>
+
+  <!-- DISPLAY SUCCESS STORIES -->
+  <div class="club-box">
+    <h3>Success Stories</h3>
+    <ul id="storyList"></ul>
+  </div>
+
+  <!-- EMAIL SECTION -->
+  <div class="club-box">
+    <h3>Email Success Stories to All VIT Students</h3>
+
     <input type="email" id="emailUser" placeholder="admin@vit.edu" required>
+    <input type="password" id="emailPass" placeholder="Password" required>
 
-    <label for="emailPass">Password</label>
-    <input type="password" id="emailPass" placeholder="Enter password" required>
-
-    <label for="story">Success Story</label>
-    <textarea id="story" placeholder="Enter success story to email..." required></textarea>
-
-    <button type="submit">Send Email</button>
-
+    <button onclick="sendMail()">Send Email</button>
     <p id="emailMsg"></p>
-  </form>
+  </div>
 </section>
+
 
 
 </main>

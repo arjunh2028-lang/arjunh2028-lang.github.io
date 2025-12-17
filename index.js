@@ -273,32 +273,43 @@
       })();
 
     });
-    // Store email credentials (CLIENT SIDE ONLY)
+/* STORE EMAIL CREDENTIALS (CLIENT SIDE ONLY) */
 if (!localStorage.getItem("vitEmail")) {
   localStorage.setItem("vitEmail", "admin@vit.edu");
   localStorage.setItem("vitPass", "vit123");
 }
 
+/* ADD SUCCESS STORY */
+function addStory() {
+  const text = document.getElementById("storyText").value;
+  if (text === "") return;
+
+  const li = document.createElement("li");
+  li.textContent = text;
+  document.getElementById("storyList").appendChild(li);
+
+  document.getElementById("storyText").value = "";
+}
+
+/* EMAIL SIMULATION */
 function sendMail() {
   const user = document.getElementById("emailUser").value;
   const pass = document.getElementById("emailPass").value;
-  const story = document.getElementById("story").value;
   const msg = document.getElementById("emailMsg");
 
-  const storedUser = localStorage.getItem("vitEmail");
-  const storedPass = localStorage.getItem("vitPass");
-
-  if (user === storedUser && pass === storedPass) {
+  if (
+    user === localStorage.getItem("vitEmail") &&
+    pass === localStorage.getItem("vitPass")
+  ) {
     msg.style.color = "green";
     msg.innerText =
-      "Success story emailed to all VIT students (Simulation).";
+      "Success stories emailed to all VIT students (Simulation).";
   } else {
     msg.style.color = "red";
-    msg.innerText = "Invalid email credentials!";
+    msg.innerText = "Invalid credentials!";
   }
-
-  return false; // prevent page reload
 }
+
 
     
 
