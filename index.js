@@ -273,4 +273,32 @@
       })();
 
     });
+    // Store email credentials (CLIENT SIDE ONLY)
+if (!localStorage.getItem("vitEmail")) {
+  localStorage.setItem("vitEmail", "admin@vit.edu");
+  localStorage.setItem("vitPass", "vit123");
+}
+
+function sendMail() {
+  const user = document.getElementById("emailUser").value;
+  const pass = document.getElementById("emailPass").value;
+  const story = document.getElementById("story").value;
+  const msg = document.getElementById("emailMsg");
+
+  const storedUser = localStorage.getItem("vitEmail");
+  const storedPass = localStorage.getItem("vitPass");
+
+  if (user === storedUser && pass === storedPass) {
+    msg.style.color = "green";
+    msg.innerText =
+      "Success story emailed to all VIT students (Simulation).";
+  } else {
+    msg.style.color = "red";
+    msg.innerText = "Invalid email credentials!";
+  }
+
+  return false; // prevent page reload
+}
+
+    
 

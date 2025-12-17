@@ -144,4 +144,43 @@ button:hover,input[type="submit"]:hover{background:var(--accent-600)}
 .form-success{display:none;margin-top:12px;padding:12px;border-radius:8px;background:#e6fffa;color:#064e3b;border:1px solid #bff0ea}
 .form-success[aria-hidden="false"]{display:block}
 
+.email-section {
+  margin-top: 40px;
+  padding: 24px;
+  background: rgba(255,255,255,0.95);
+  color: #111;
+  border-radius: 12px;
+}
+
+.email-section h2 {
+  margin-bottom: 16px;
+}
+
+.email-section input,
+.email-section textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.email-section button {
+  background: var(--accent);
+  color: #fff;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+#emailMsg {
+  margin-top: 12px;
+  font-weight: 600;
+}
+.email-section button:hover {
+  background: var(--accent-600);
+}
+
 

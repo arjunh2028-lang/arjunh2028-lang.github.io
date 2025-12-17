@@ -145,6 +145,26 @@
       </p>
     </article>
   </section>
+  <section class="email-section">
+  <h2>Email Success Story to All VIT Students</h2>
+
+  <form id="emailForm" onsubmit="return sendMail()">
+
+    <label for="emailUser">Email ID</label>
+    <input type="email" id="emailUser" placeholder="admin@vit.edu" required>
+
+    <label for="emailPass">Password</label>
+    <input type="password" id="emailPass" placeholder="Enter password" required>
+
+    <label for="story">Success Story</label>
+    <textarea id="story" placeholder="Enter success story to email..." required></textarea>
+
+    <button type="submit">Send Email</button>
+
+    <p id="emailMsg"></p>
+  </form>
+</section>
+
 
 </main>
 
