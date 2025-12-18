@@ -286,7 +286,6 @@ function addStory() {
   const li = document.createElement("li");
   li.textContent = text;
   document.getElementById("storyList").appendChild(li);
-
   document.getElementById("storyText").value = "";
 }
 
