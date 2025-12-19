@@ -273,40 +273,66 @@
 
     });
 
-if (!localStorage.getItem("vitEmail")) {
-  localStorage.setItem("vitEmail", "admin@vit.edu");
-  localStorage.setItem("vitPass", "vit123");
+/* ===== CLIENT-SIDE ADMIN CREDENTIAL ===== */
+if (!localStorage.getItem("adminPass")) {
+  localStorage.setItem("adminPass", "admin123");
 }
 
+let adminAuthenticated = false;
 
-function addStory() {
-  const text = document.getElementById("storyText").value;
+/* ===== ROLE SELECTION ===== */
+function selectRole(role) {
+  document.getElementById("adminLogin").style.display =
+    role === "admin" ? "block" : "none";
+
+  document.getElementById("adminPanel").style.display = "none";
+  document.getElementById("adminStatus").innerText = "";
+  adminAuthenticated = false;
+}
+
+/* ===== ADMIN LOGIN ===== */
+function adminLogin() {
+  const inputPass = document.getElementById("adminPassword").value;
+  const status = document.getElementById("adminStatus");
+
+  if (inputPass === localStorage.getItem("adminPass")) {
+    adminAuthenticated = true;
+    status.style.color = "green";
+    status.innerText = "Admin authenticated successfully.";
+    document.getElementById("adminPanel").style.display = "block";
+  } else {
+    status.style.color = "red";
+    status.innerText = "Invalid admin password!";
+  }
+}
+
+/* ===== ADD ACHIEVEMENT + EMAIL (SIMULTANEOUS) ===== */
+function addAndMailAchievement() {
+  if (!adminAuthenticated) return;
+
+  const text = document.getElementById("newAchievement").value.trim();
   if (text === "") return;
+
+  const list = document.getElementById("achievementList");
 
   const li = document.createElement("li");
   li.textContent = text;
-  document.getElementById("storyList").appendChild(li);
-  document.getElementById("storyText").value = "";
-}
 
-
-function sendMail() {
-  const user = document.getElementById("emailUser").value;
-  const pass = document.getElementById("emailPass").value;
-  const msg = document.getElementById("emailMsg");
-
-  if (
-    user === localStorage.getItem("vitEmail") &&
-    pass === localStorage.getItem("vitPass")
-  ) {
-    msg.style.color = "green";
-    msg.innerText =
-      "Success stories emailed to all VIT students (Simulation).";
+  /* ✅ INSERT IMMEDIATELY AFTER FIRST ACHIEVEMENT */
+  if (list.children.length > 0) {
+    list.insertBefore(li, list.children[1]);
   } else {
-    msg.style.color = "red";
-    msg.innerText = "Invalid credentials!";
+    list.appendChild(li);
   }
+
+  /* 📧 EMAIL SIMULATION */
+  alert(
+    "Email sent to all VIT students:\n\n" + text
+  );
+
+  document.getElementById("newAchievement").value = "";
 }
+
 
 
     

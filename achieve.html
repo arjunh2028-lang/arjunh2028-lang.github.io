@@ -145,48 +145,43 @@
       </p>
     </article>
   </section>
-<section class="interactive-section">
-  <h2>Club Management & Success Stories</h2>
+<section class="admin-section">
+  <h2>Achievements Management</h2>
 
-  <div class="club-box">
-    <h3>Aaroh Music Club Committee</h3>
-
-    <input type="checkbox" id="toggleCommittee">
-    <label for="toggleCommittee" class="toggle-btn">
-      Update Committee
+  <!-- ROLE SELECTION -->
+  <div class="role-select">
+    <label>
+      <input type="radio" name="role" checked onclick="selectRole('user')">
+      Normal User
     </label>
 
-    <div class="committee">
-      <p><strong>President:</strong> Om Joshi</p>
-      <p><strong>Secretary:</strong> Kshitij Raikar</p>
-      <p><strong>Treasurer:</strong> Koushal Sadavarte</p>
-    </div>
+    <label>
+      <input type="radio" name="role" onclick="selectRole('admin')">
+      Admin
+    </label>
   </div>
 
- 
-  <div class="club-box">
-    <h3>Add Success Story</h3>
-    <textarea id="storyText" placeholder="Enter success story..." required></textarea>
-    <button onclick="addStory()">Add Story</button>
+  <!-- ADMIN LOGIN -->
+  <div id="adminLogin" class="admin-login">
+    <input type="password" id="adminPassword" placeholder="Enter Admin Password">
+    <button onclick="adminLogin()">Login as Admin</button>
+    <p id="adminStatus"></p>
   </div>
 
- 
-  <div class="club-box">
-    <h3>Success Stories</h3>
-    <ul id="storyList"></ul>
-  </div>
+  <!-- ADMIN PANEL -->
+  <div id="adminPanel" class="admin-panel">
+    <h3>Add Achievement & Email to Students</h3>
 
- 
-  <div class="club-box">
-    <h3>Email Success Stories to All VIT Students</h3>
+    <textarea id="newAchievement"
+      placeholder="Enter new achievement..."
+      required></textarea>
 
-    <input type="email" id="emailUser" placeholder="admin@vit.edu" required>
-    <input type="password" id="emailPass" placeholder="Password" required>
-
-    <button onclick="sendMail()">Send Email</button>
-    <p id="emailMsg"></p>
+    <button onclick="addAndMailAchievement()">
+      Add Achievement & Send Mail
+    </button>
   </div>
 </section>
+
 
 
 
