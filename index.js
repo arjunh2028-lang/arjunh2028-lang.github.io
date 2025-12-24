@@ -271,67 +271,75 @@
         document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox(); });
       })();
 
+      // Admin controls for Achievements management (jQuery)
+      const ADMIN_PASSWORD = 'Aaroh@2025';
+
+      function selectRole(role) {
+        const $adminLogin = $('#adminLogin');
+        const $adminPanel = $('#adminPanel');
+        const $status = $('#adminStatus');
+        if (role === 'admin') {
+          $adminLogin.show().attr('aria-hidden', 'false');
+        } else {
+          $adminLogin.hide().attr('aria-hidden', 'true');
+          $adminPanel.hide().attr('aria-hidden', 'true');
+          $status.text('').css('color', '');
+        }
+      }
+      window.selectRole = selectRole;
+
+      function adminLogin() {
+        const $pw = $('#adminPassword');
+        const $status = $('#adminStatus');
+        if (!$pw.length || !$status.length) return;
+        if ($pw.val() === ADMIN_PASSWORD) {
+          $status.text('Logged in as Admin').css('color', '#00c8ff');
+          $('#adminPanel').show().attr('aria-hidden', 'false');
+          $('#adminLogin').hide();
+          $pw.val('');
+        } else {
+          $status.text('Invalid password').css('color', '#f87171');
+          $pw.focus();
+          setTimeout(() => { $status.text('').css('color', ''); }, 3000);
+        }
+      }
+      window.adminLogin = adminLogin;
+
+      function addAchievement() {
+        const $ta = $('#newAchievement');
+        if (!$ta.length) return;
+        const text = $ta.val().trim();
+        if (!text) { alert('Please enter an achievement before adding.'); return; }
+        const $awards = $('.competition-awards').first();
+        if ($awards.length) {
+          const $article = $('<article>');
+          const $h = $('<h3>').text('Update — ' + new Date().toLocaleDateString());
+          const $p = $('<p>').text(text);
+          $article.append($h).append($p);
+          $awards.prepend($article);
+        }
+        $ta.val('');
+        $('#adminStatus').text('Achievement added.').css('color', '#00c8ff');
+        setTimeout(() => { $('#adminStatus').text(''); }, 5000);
+      }
+      window.addAchievement = addAchievement;
+
+      function openMailDraft() {
+        const text = ($('#newAchievement').val() || '').trim();
+        if (!text) { alert('Please enter an achievement to mail.'); return; }
+        const subject = encodeURIComponent('New Achievement — Aaroh Music Club');
+        const body = encodeURIComponent(text + '\n\n— Aaroh Music Club\n' + location.href);
+        window.open('mailto:?subject=' + subject + '&body=' + body, '_blank');
+        $('#adminStatus').text('Mail draft opened.').css('color', '#00c8ff');
+        setTimeout(() => { $('#adminStatus').text(''); }, 5000);
+      }
+      window.openMailDraft = openMailDraft;
+
+      // Ensure default view
+      selectRole('user');
+
     });
 
-/* ===== CLIENT-SIDE ADMIN CREDENTIAL ===== */
-if (!localStorage.getItem("adminPass")) {
-  localStorage.setItem("adminPass", "admin123");
-}
-
-let adminAuthenticated = false;
-
-/* ===== ROLE SELECTION ===== */
-function selectRole(role) {
-  document.getElementById("adminLogin").style.display =
-    role === "admin" ? "block" : "none";
-
-  document.getElementById("adminPanel").style.display = "none";
-  document.getElementById("adminStatus").innerText = "";
-  adminAuthenticated = false;
-}
-
-/* ===== ADMIN LOGIN ===== */
-function adminLogin() {
-  const inputPass = document.getElementById("adminPassword").value;
-  const status = document.getElementById("adminStatus");
-
-  if (inputPass === localStorage.getItem("adminPass")) {
-    adminAuthenticated = true;
-    status.style.color = "green";
-    status.innerText = "Admin authenticated successfully.";
-    document.getElementById("adminPanel").style.display = "block";
-  } else {
-    status.style.color = "red";
-    status.innerText = "Invalid admin password!";
-  }
-}
-
-/* ===== ADD ACHIEVEMENT + EMAIL (SIMULTANEOUS) ===== */
-function addAndMailAchievement() {
-  if (!adminAuthenticated) return;
-
-  const text = document.getElementById("newAchievement").value.trim();
-  if (text === "") return;
-
-  const list = document.getElementById("achievementList");
-
-  const li = document.createElement("li");
-  li.textContent = text;
-
-  /* ✅ INSERT IMMEDIATELY AFTER FIRST ACHIEVEMENT */
-  if (list.children.length > 0) {
-    list.insertBefore(li, list.children[1]);
-  } else {
-    list.appendChild(li);
-  }
-
-  /* 📧 EMAIL SIMULATION */
-  alert(
-    "Email sent to all VIT students:\n\n" + text
-  );
-
-  document.getElementById("newAchievement").value = "";
-}
 
 
 
