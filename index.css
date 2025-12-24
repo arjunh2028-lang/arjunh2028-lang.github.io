@@ -164,4 +164,5 @@ input[aria-invalid="true"]:focus,textarea[aria-invalid="true"]:focus,select[aria
 .admin-panel[aria-hidden="false"]{display:block}
 #adminStatus{margin-top:8px;font-weight:600}
 .admin-actions{margin-top:12px;display:flex;gap:10px;flex-wrap:wrap}
+.admin-panel input[type="text"]{width:100%;padding:12px 14px;border:1px solid rgba(15,23,36,0.08);border-radius:8px;background:transparent;color:var(--card-text);margin-top:6px;transition:box-shadow .15s ease,border-color .15s ease}
 @media(max-width:600px){ .admin-login input[type="password"]{width:100%;margin-right:0} .role-select{flex-direction:column;align-items:flex-start} }
