@@ -6,29 +6,39 @@
     <meta name="description" content="Learn about Aaroh Music Club, our mission, committee members, and club activities. Join workshops, events, and performances.">
     <meta name="theme-color" content="#0b1020">
     <title>About - Aaroh Music Club</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="index.css">
     <script src="index.js" defer></script>
 </head>
 <body>
     <a class="skip-link" href="#main-content">Skip to main content</a>
-    <header class="site-header">
-        <div class="logo"><img src="aaroh2.jpg" alt="Aaroh Music Club logo (club emblem)"></div>
-        <h1 class="brand">🎶🎤🎼Aaroh Music Club🎶🎤🎼</h1>
-    </header>
-
-    <nav class="main-nav">
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="form.html">Application Form</a></li>
-            <li><a href="gallery.html">Gallery</a></li>
-            <li><a href="Achieve.html">Achievements🏆</a></li>
-        </ul>
-    </nav>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="index.html">
+          <img src="aaroh2.jpg" alt="Aaroh Music Club logo" width="40" height="40" class="d-inline-block align-top me-2 rounded-circle">
+          <span>🎶 Aaroh Music Club</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainNavbar">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link active" aria-current="page" href="about.html">About</a></li>
+            <li class="nav-item"><a class="nav-link" href="form.html">Application Form</a></li>
+            <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
+            <li class="nav-item"><a class="nav-link" href="Achieve.html">Achievements</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav> 
     
 
-    <main id="main-content">
-        <h2>About Aaroh Music Club</h2>
+    <main id="main-content" class="container py-5">
+        <h2 class="display-6 mb-3">About Aaroh Music Club</h2>
         <p>Welcome to Aaroh Music Club, a vibrant community of music enthusiasts dedicated to celebrating and promoting various forms of music.</p>
         
         <h3>Our Mission</h3>
@@ -44,48 +54,48 @@
         
        
         <h3>Core Committee</h3>
-        <div class="gallery">
-            <figure class="gallery-item image">
-                <img src="CP3.jpg" alt="Chairperson portrait">
-                <figcaption class="gallery-item figcaption">Chairperson</figcaption>
+        <div class="row g-3">
+            <figure class="gallery-item image col-6 col-md-4">
+                <img src="CP3.jpg" alt="Chairperson portrait" class="img-fluid rounded">
+                <figcaption class="gallery-item figcaption text-center mt-2">Chairperson</figcaption>
             </figure>
-            <figure class="gallery-item image">
-                <img src="CP2.jpg" alt="Chairperson portrait">
-                <figcaption class="gallery-item figcaption">Chairperson</figcaption>
+            <figure class="gallery-item image col-6 col-md-4">
+                <img src="CP2.jpg" alt="Chairperson portrait" class="img-fluid rounded">
+                <figcaption class="gallery-item figcaption text-center mt-2">Chairperson</figcaption>
             </figure>
-            <figure class="gallery-item image">
-                <img src="CP.jpg" alt="Chairperson portrait">
-                <figcaption class="gallery-item figcaption">Chairperson</figcaption>
-            </figure>
-        </div>
-        <div class="gallery">
-            <figure class="gallery-item image">
-                <img src="S.jpg" alt="Secretary portrait">
-                <figcaption class="gallery-item figcaption">Secretary</figcaption>
-            </figure>
-            <figure class="gallery-item image">
-                <img src="S1.jpg" alt="Secretary portrait">
-                <figcaption class="gallery-item figcaption">Secretary</figcaption>
+            <figure class="gallery-item image col-6 col-md-4">
+                <img src="CP.jpg" alt="Chairperson portrait" class="img-fluid rounded">
+                <figcaption class="gallery-item figcaption text-center mt-2">Chairperson</figcaption>
             </figure>
         </div>
-        <div class="gallery">
-            <figure class="gallery-item image">
-                <img src="treasrer.png" alt="Treasurer portrait">
-                <figcaption class="gallery-item figcaption">Treasurer</figcaption>
+        <div class="row g-3">
+            <figure class="gallery-item image col-6 col-md-4">
+                <img src="S.jpg" alt="Secretary portrait" class="img-fluid rounded">
+                <figcaption class="gallery-item figcaption text-center mt-2">Secretary</figcaption>
             </figure>
-            <figure class="gallery-item image">
-                <img src="PRO.jpg" alt="Public Relations Officer portrait">
-                <figcaption class="gallery-item figcaption">Public Relations Officer</figcaption>
+            <figure class="gallery-item image col-6 col-md-4">
+                <img src="S1.jpg" alt="Secretary portrait" class="img-fluid rounded">
+                <figcaption class="gallery-item figcaption text-center mt-2">Secretary</figcaption>
             </figure>
-            <figure class="gallery-item image">
-                <img src="EC.jpg" alt="Event Coordinator portrait">
-                <figcaption class="gallery-item figcaption">Event Coordinator</figcaption>
+        </div>
+        <div class="row g-3">
+            <figure class="gallery-item image col-6 col-md-4">
+                <img src="treasrer.png" alt="Treasurer portrait" class="img-fluid rounded">
+                <figcaption class="gallery-item figcaption text-center mt-2">Treasurer</figcaption>
+            </figure>
+            <figure class="gallery-item image col-6 col-md-4">
+                <img src="PRO.jpg" alt="Public Relations Officer portrait" class="img-fluid rounded">
+                <figcaption class="gallery-item figcaption text-center mt-2">Public Relations Officer</figcaption>
+            </figure>
+            <figure class="gallery-item image col-6 col-md-4">
+                <img src="EC.jpg" alt="Event Coordinator portrait" class="img-fluid rounded">
+                <figcaption class="gallery-item figcaption text-center mt-2">Event Coordinator</figcaption>
             </figure>
         </div>
          <h3>Join Us</h3>
         <p>If you're passionate about music, we invite you to join our club! Whether you're an instrumentist or vocalist, there's a place for you in our community.</p>
     <section class="map-section">
-  <h2 style="color: #000000;">Our Location</h2>
+  <h2 class="h4 text-dark">Our Location</h2>
   <p>
     Vishwakarma Institute of Technology (VIT), Bibwewadi, Pune
   </p>
@@ -104,9 +114,11 @@
 </section>
     </main>
 
-        <footer>
-                <p>&copy; 2025 Aaroh Music Club. All rights reserved.</p>
-        </footer>
+        <footer class="bg-dark text-light py-4 mt-5">
+          <div class="container text-center">
+            <p class="mb-0">&copy; 2025 Aaroh Music Club. All rights reserved.</p>
+          </div>
+        </footer> 
 
         <!-- Lightbox (single shared instance for all galleries) -->
         <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-labelledby="lightbox-caption" aria-hidden="true">
@@ -116,6 +128,8 @@
                 <button class="lightbox-close" aria-label="Close">&times;</button>
             </div>
         </div>
+    <!-- Bootstrap JS bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
