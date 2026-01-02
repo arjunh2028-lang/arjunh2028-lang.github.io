@@ -459,8 +459,67 @@
       bindApplicantsTableEvents();
       selectRole('user');
 
+      // Debug: log when BroadcastChannel or storage change is received
+      try {
+        if (_bc) {
+          _bc.onmessage = function (m) { try { console.log('BroadcastChannel message:', m); renderApplicantsTable(); showArrivalBanner(); } catch (e) { } };
+        }
+      } catch (e) { }
+      window.addEventListener('storage', function (e) {
+        if (!e) return; if (e.key === APPLICANTS_KEY || e.key === APPLICANTS_KEY + '_ping') {
+          try { console.log('storage event:', e.key); renderApplicantsTable(); showArrivalBanner(); } catch (err) { /* ignore */ }
+        }
+      });
+
+      // Polling fallback: check every 1.5s for changes (helps when storage events don't fire across contexts)
+      let _lastApplicantsChecksum = localStorage.getItem(APPLICANTS_KEY) || '';
+      setInterval(() => {
+        try {
+          const current = localStorage.getItem(APPLICANTS_KEY) || '';
+          if (current !== _lastApplicantsChecksum) {
+            _lastApplicantsChecksum = current;
+            console.log('Applicants updated via polling');
+            renderApplicantsTable();
+            showArrivalBanner();
+          }
+        } catch (e) { /* ignore */ }
+      }, 1500);
+
+      // Small visual banner to indicate a new applicant arrived
+      function showArrivalBanner() {
+        try {
+          let b = document.getElementById('arrivalBanner');
+          if (!b) {
+            b = document.createElement('div');
+            b.id = 'arrivalBanner';
+            b.style.position = 'fixed'; b.style.top = '16px'; b.style.right = '16px'; b.style.padding = '10px 14px'; b.style.background = '#00c8ff'; b.style.color = '#022'; b.style.borderRadius = '8px'; b.style.boxShadow = '0 6px 20px rgba(2,6,23,0.12)'; b.style.zIndex = 1300; b.style.fontWeight = '700';
+            b.textContent = 'New application received';
+            document.body.appendChild(b);
+          }
+          b.style.opacity = '1';
+          setTimeout(() => { try { b.style.transition = 'opacity 0.45s ease'; b.style.opacity = '0'; setTimeout(() => { try { b.remove(); } catch (e) {} }, 450); } catch (e) { } }, 1800);
+        } catch (e) { /* ignore */ }
+      }
+
       // Applicants localStorage helpers
       const APPLICANTS_KEY = 'aaroh_applicants';
+
+      // BroadcastChannel fallback to notify other tabs/windows when applicants update
+      let _bc = null;
+      try {
+        if (typeof BroadcastChannel !== 'undefined') {
+          _bc = new BroadcastChannel('aaroh_applicants_channel');
+          _bc.onmessage = function () { renderApplicantsTable(); };
+        }
+      } catch (e) { /* ignore */ }
+
+      // Listen for storage changes (works in other windows/tabs)
+      window.addEventListener('storage', function (e) {
+        if (!e) return;
+        if (e.key === APPLICANTS_KEY || e.key === APPLICANTS_KEY + '_ping') {
+          try { renderApplicantsTable(); } catch (err) { /* ignore */ }
+        }
+      });
 
       function getApplicants() {
         const raw = localStorage.getItem(APPLICANTS_KEY);
@@ -473,10 +532,26 @@
       }
 
       function addApplicant(item) {
+        // debug: log new applicant
+        try { console.log('addApplicant:', item); } catch (e) {}
+
         const arr = getApplicants();
         arr.unshift(item); // newest first
         saveApplicants(arr);
+
+        // mark last added id so other windows/tabs can highlight the row
+        try { localStorage.setItem(APPLICANTS_KEY + '_last', String(item.id)); } catch (e) { }
+
         renderApplicantsTable();
+
+        // Notify other windows/tabs that applications changed
+        try {
+          if (_bc) _bc.postMessage('updated');
+          else localStorage.setItem(APPLICANTS_KEY + '_ping', Date.now().toString());
+        } catch (e) { /* ignore */ }
+
+        // remove the marker shortly after so it doesn't persist forever
+        setTimeout(() => { try { localStorage.removeItem(APPLICANTS_KEY + '_last'); } catch (e) { } }, 3000);
       }
 
       function renderApplicantsTable(filter) {
@@ -490,7 +565,7 @@
         }) : arr;
         if (!filtered.length) {
           const tr = document.createElement('tr');
-          tr.innerHTML = `<td colspan="10" class="muted">No entries yet — use the <a href="form.html">Application Form</a> to add sample data.</td>`;
+          tr.innerHTML = `<td colspan="9" class="muted">No entries yet — use the <a href="form.html">Application Form</a> to add sample data.</td>`;
           tbody.appendChild(tr);
         } else {
           filtered.forEach(item => {
@@ -504,7 +579,6 @@
               <td>${escapeHtml(item.year)}</td>
               <td>${escapeHtml(item.branch)}</td>
               <td>${escapeHtml(item.applying_as)}</td>
-              <td>${escapeHtml(item.videoFileName || '')}</td>
               <td class="notes">${escapeHtml(item.notes || '')}</td>
               <td class="actions">
                 <button class="small-btn btn-edit" data-id="${item.id}">Edit</button>
@@ -514,6 +588,18 @@
           });
         }
         const count = document.getElementById('appCount'); if (count) count.textContent = (filtered.length || 0);
+
+        // Highlight newly added row (if another tab just added one or local add)
+        try {
+          const last = localStorage.getItem(APPLICANTS_KEY + '_last');
+          if (last) {
+            const newRow = tbody.querySelector(`tr[data-id="${last}"]`);
+            if (newRow) {
+              newRow.classList.add('new-entry');
+              setTimeout(() => { try { newRow.classList.remove('new-entry'); } catch (e) {} }, 2200);
+            }
+          }
+        } catch (e) { /* ignore */ }
       }
 
       function bindApplicantsTableEvents() {
@@ -602,10 +688,10 @@
       function exportApplicantsCSV() {
         const arr = getApplicants();
         if (!arr.length) { alert('No data to export'); return; }
-        const headers = ['Full name','Email','PRN No.','Campus','Year','Branch','Applying as','Video file','Notes','Date'];
+        const headers = ['Full name','Email','PRN No.','Campus','Year','Branch','Applying as','Notes','Date'];
         const lines = [headers.join(',')];
         arr.forEach(a => {
-          const row = [a.full_name,a.email,a.prn,a.campus,a.year,a.branch,a.applying_as,(a.videoFileName||''),(a.notes||''),a.date];
+          const row = [a.full_name,a.email,a.prn,a.campus,a.year,a.branch,a.applying_as,(a.notes||''),a.date];
           lines.push(row.map(v => '"' + String(v||'').replace(/"/g,'""') + '"').join(','));
         });
         const blob = new Blob([lines.join('\n')], { type: 'text/csv' });
